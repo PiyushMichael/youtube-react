@@ -5,26 +5,32 @@ import VideoDetail from './video-detail.js';
 import VideoList from './video-list.js';
 import youtube from './youtube'
 
+
 const KEY = 'AIzaSyC2RvDeHfik1ztpDEUfw2_N7cGllFLrIhg';
 
 class App extends React.Component{
-	onTermSubmit = (term) => {
-		//alert('searching '+term);
-		youtube.get('/search',{
+	state = {videos: []};
+	
+	setResponse = (r) => {
+		this.setState({videos: r.data.items});
+		console.log(this.state.videos);
+	}
+	
+	onTermSubmit = term => {
+		const response = youtube.get('/search', {
 			params: {
 				q: term,
 				part: 'snippet',
-				maxResults: 5,
 				key: KEY
 			}
-		});
+		}).then((response) => this.setResponse(response));
 	}
 	
 	render(){
 		return <div className="ui container">
 			<SearchBar onFormSubmit={this.onTermSubmit} />
 			<VideoDetail />
-			<VideoList />
+			<VideoList vids={this.state.videos}/>
 		</div>
 	}
 }
