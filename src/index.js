@@ -1,12 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import SearchBar from './search-bar.js';
+import VideoDetail from './video-detail.js';
+import VideoList from './video-list.js';
+import youtube from './youtube'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const KEY = 'AIzaSyC2RvDeHfik1ztpDEUfw2_N7cGllFLrIhg';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+class App extends React.Component{
+	onTermSubmit = (term) => {
+		//alert('searching '+term);
+		youtube.get('/search',{
+			params: {
+				q: term,
+				part: 'snippet',
+				maxResults: 5,
+				key: KEY
+			}
+		});
+	}
+	
+	render(){
+		return <div className="ui container">
+			<SearchBar onFormSubmit={this.onTermSubmit} />
+			<VideoDetail />
+			<VideoList />
+		</div>
+	}
+}
+
+ReactDOM.render(<App />,document.querySelector('#root'));
