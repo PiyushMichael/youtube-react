@@ -4,6 +4,7 @@ import SearchBar from './search-bar.js';
 import VideoDetail from './video-detail.js';
 import VideoList from './video-list.js';
 import youtube from './youtube'
+import './youtube.css';
 
 
 const KEY = 'AIzaSyC2RvDeHfik1ztpDEUfw2_N7cGllFLrIhg';
