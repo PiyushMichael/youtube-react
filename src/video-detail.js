@@ -2,7 +2,11 @@ import React from 'react';
 
 class VideoDetail extends React.Component{
 	render(){
-		return <div>video detail...</div>
+		if(this.props.video) return <div>
+		video detail...
+		<p>{this.props.video.snippet.title}</p>
+		</div>
+		else return <div>video detail...</div>
 	}
 }
 
