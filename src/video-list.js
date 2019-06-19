@@ -3,10 +3,11 @@ import VideoItem from './video-item';
 
 class VideoList extends React.Component{
 	render(){
-		return <div>
-			video list...
-			<p>I have {this.props.vids.length} videos..</p>
-		</div>
+		const renderedList = this.props.vids.map((vid) => {
+			return <VideoItem title={vid.snippet.title} thumb={vid.snippet.thumbnails.default.url} channel={vid.snippet.channelTitle} />
+		});
+		
+		return <div>{renderedList}</div>
 	}
 }
 
