@@ -10,11 +10,10 @@ import './youtube.css';
 const KEY = 'AIzaSyC2RvDeHfik1ztpDEUfw2_N7cGllFLrIhg';
 
 class App extends React.Component{
-	state = {def: null, videos: []};
+	state = {selectedVideo: null, videos: []};
 	
 	setResponse = (r) => {
-		this.setState({videos: r.data.items, def: r.data.items[0]});
-		//console.log(this.state.videos);
+		this.setState({videos: r.data.items, selectedVideo: r.data.items[0]});
 	}
 	
 	onTermSubmit = term => {
@@ -27,15 +26,18 @@ class App extends React.Component{
 		}).then((response) => this.setResponse(response));
 	}
 	videoSelect = (video) => {
-		console.log('from the app: ',video);
-		this.setState({def: video});
+		this.setState({selectedVideo: video});
 	}
 	
 	render(){
 		return <div className="ui container">
 			<SearchBar onFormSubmit={this.onTermSubmit} />
-			<VideoDetail video={this.state.def}/>
-			<VideoList onVideoSelect={this.videoSelect} vids={this.state.videos}/>
+			<div className="ui grid">
+				<div className="ui row">
+					<div className="ten wide column"><VideoDetail video={this.state.selectedVideo}/></div>
+					<div className="six wide column"><VideoList onVideoSelect={this.videoSelect} vids={this.state.videos}/></div>
+				</div>
+			</div>
 		</div>
 	}
 }
